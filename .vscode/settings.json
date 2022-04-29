@@ -1,0 +1,9 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Lutfu Orhun\\Downloads\\jansi-2.1.0.jar",
+        "c:\\Users\\Lutfu Orhun\\Downloads\\jline-3.5.1.jar",
+        "c:\\Users\\Lutfu Orhun\\Downloads\\jna-4.5.1.jar",
+        "c:\\Users\\Lutfu Orhun\\Downloads\\postgresql-42.3.3.jar"
+    ]
+}
