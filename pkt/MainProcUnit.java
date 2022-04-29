@@ -74,9 +74,10 @@ public class MainProcUnit {
         
         boolean pressedBefore_2 = false, pressedBefore_3 = false;
         modulesThread.start();
-
+        
         while (console.menu_main() != 5){
-        console.thread_MenuType(1);
+            console.thread_MenuType(1);
+            connection.setModuleStatus(true);
             switch (console.menu_getMainSelection()){
                 case 1:
                     modulesThread.interrupt();
