@@ -31,7 +31,8 @@ CREATE TABLE public.env_modulators (
     module_status boolean NOT NULL,
     target_temperature double precision DEFAULT 0 NOT NULL,
     cooling_status boolean DEFAULT false NOT NULL,
-    heating_status boolean DEFAULT false NOT NULL
+    heating_status boolean DEFAULT false NOT NULL,
+    override boolean DEFAULT false NOT NULL
 );
 
 
@@ -205,8 +206,8 @@ ALTER TABLE ONLY public.user_module_id ALTER COLUMN user_id SET DEFAULT nextval(
 --
 
 INSERT INTO public.env_modulators VALUES
-	(2, 2, 30.06, false, 30, false, false),
-	(1, 1, 20.13, false, 22, false, false);
+	(1, 1, 21.95, true, 22, false, false, false),
+	(2, 2, 30.06, false, 30, false, false, false);
 
 
 --
