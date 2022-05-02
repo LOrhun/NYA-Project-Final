@@ -7,13 +7,24 @@ import pkt.Modules.*;
 
 public class MainProcUnit {
     //*Runs TemperatureUnit function every 100 + 1900 millisecs
-    Runnable TUnit = new Runnable() {public void run(){while(!threadShouldStop){ try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}TemperatureUnit(); try {Thread.sleep(1400);} catch (InterruptedException e) {e.printStackTrace();}}}};
+    Runnable TUnit = new Runnable() {
+        public void run(){
+            while(!threadShouldStop)
+            { 
+                try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+                if (interruptThread == false){
+                    TemperatureUnit();
+                }
+                try {Thread.sleep(1400);} catch (InterruptedException e) {e.printStackTrace();}
+            }
+        }
+    };
     
     private Thread modulesThread = new Thread(TUnit, "TUnit");
-    private boolean threadShouldStop = false;
-
+    private boolean threadShouldStop = false, interruptThread = false;
+    
     private int IdleCounter;
-    private Room room;
+    private Room simulatedRoom;
     private IConnection connection;
     private ITempMod tMod;
     private ITempReader tReader;
@@ -25,9 +36,9 @@ public class MainProcUnit {
 
     public MainProcUnit() {
         console = new MConsoleEditor();
-        room = new Room();
-        tMod = new MTemperatureModulator(room);
-        tReader = new MTemperatureReader(room);
+        simulatedRoom = new Room();
+        tMod = new MTemperatureModulator(simulatedRoom);
+        tReader = new MTemperatureReader(simulatedRoom);
 
         console.menu_status("SELF_CHECK");
         if (tMod.stat_ModuleStatus() ^ tReader.stat_ModuleStatus()) {
@@ -45,12 +56,11 @@ public class MainProcUnit {
         tMod.set_TargetTemp(connection.getTargetTemp());
         tMod.heatExchange();
 
-        connection.setCoolingStatus((tMod.get_CurrentStatus() == 2) ? true : false);
-        connection.setHeatingStatus((tMod.get_CurrentStatus() == 1) ? true : false);
+        tMod.set_Override(connection.getOverride());
 
         IdleCounter = ((tMod.get_CurrentStatus() == 0) ? IdleCounter + 1 : 0);
         console.thread_Update(tReader.get_RoomTemp(), connection.getTargetTemp());
-        console.thread_MenuType((console.menu_getMainSelection() == 1) ? 0 : ((IdleCounter > 5) ? 2 : 1));
+        console.thread_MenuType((IdleCounter > 5) ? 2 : 1);
     }
 
     private void logon(){
@@ -74,24 +84,24 @@ public class MainProcUnit {
         
         boolean pressedBefore_2 = false, pressedBefore_3 = false;
         modulesThread.start();
-        
-        while (console.menu_main() != 5){
+
+        while (console.menu_main(connection.getOverride()) != 5){
             console.thread_MenuType(1);
             connection.setModuleStatus(true);
             switch (console.menu_getMainSelection()){
                 case 1:
-                    modulesThread.interrupt();
-                    tMod.set_Override(0);
+                    interruptThread = true;
+                    connection.setOverride(0);
                     console.thread_MenuType(0);
                     connection.setTargetTemp(console.menu_newTarget(connection.getTargetTemp()));
-                    modulesThread.start();
+                    interruptThread = false;
                     break;
                 case 2:
-                    tMod.set_Override((pressedBefore_2 == true) ? 3 : 1);
+                    connection.setOverride((pressedBefore_2 == true) ? 3 : 1);
                     pressedBefore_2 = !pressedBefore_2;
                     break;
                 case 3:
-                    tMod.set_Override((pressedBefore_3 == true) ? 3 : 2);
+                    connection.setOverride((pressedBefore_3 == true) ? 3 : 2);
                     pressedBefore_3 = !pressedBefore_3;
                     break;
                 default:
@@ -101,6 +111,7 @@ public class MainProcUnit {
         }
 
         connection.setModuleStatus(false);
+        connection.setOverride(0);
         threadShouldStop = true;
         connection.disconnect();
         console.clearConsole();

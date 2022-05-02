@@ -12,10 +12,11 @@ public class User {
 
     private boolean cooling_status;
     private boolean heating_status;
+    private boolean override;
 
     
     public User(String username, String password, int unitID, boolean module_status, double target_temp,
-            double room_temp, boolean cooling_status, boolean heating_status) {
+            double room_temp, boolean cooling_status, boolean heating_status, boolean override) {
         this.username = username;
         this.password = password;
         this.unitID = unitID;
@@ -24,6 +25,7 @@ public class User {
         this.room_temp = room_temp;
         this.cooling_status = cooling_status;
         this.heating_status = heating_status;
+        this.override = override;
     }
     
     public static String getUsername(User user) {
@@ -88,6 +90,15 @@ public class User {
 
     public static boolean getHeatingStatus(User user) {
         return user.heating_status;
+    }
+
+    public static boolean setOverride(User user, boolean override) {
+        user.override = override;
+        return user.override;
+    }
+
+    public static boolean getOverride(User user) {
+        return user.override;
     }
 
 }

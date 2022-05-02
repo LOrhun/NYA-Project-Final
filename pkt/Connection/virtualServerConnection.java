@@ -17,9 +17,9 @@ public class virtualServerConnection implements IConnection{
     private double targetTemp = 25;
     
     public virtualServerConnection(){
-        users.add(new User("test", "test", 1, false, 20, 20, false, false));
-        users.add(new User("test2", "test2", 2, false, 20, 20, false, false));
-        users.add(new User("test3", "test3", 3, false, 20, 20, false, false));
+        users.add(new User("test", "test", 1, false, 20, 20, false, false, false));
+        users.add(new User("test2", "test2", 2, false, 20, 20, false, false, false));
+        users.add(new User("test3", "test3", 3, false, 20, 20, false, false, false));
     }
 
     private void notify(double target_temp){
@@ -81,23 +81,52 @@ public class virtualServerConnection implements IConnection{
     public void disconnect() {}
 
     @Override
-    public void setCoolingStatus(boolean status) {
-        users.forEach(user -> {if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){User.setCoolingStatus(user, status);}});
+    public void setOverride(int override) {
+        boolean b_override, cooling, heating;
+        switch (override){
+            case 0:
+                b_override = false;
+                cooling = false;
+                heating = false;
+                break;
+            case 1:
+                b_override = true;
+                cooling = true;
+                heating = false;
+                break;
+            case 2:
+                b_override = true;
+                cooling = false;
+                heating = true;
+                break;
+            case 3:
+                b_override = true;
+                cooling = false;
+                heating = false;
+                break;
+            default:
+                b_override = false;
+                cooling = false;
+                heating = false;
+                break;
+        }
+
+        for (User user : users) {
+            if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){User.setOverride(user, b_override); User.setCoolingStatus(user, cooling); User.setHeatingStatus(user, heating);} 
+        }
     }
 
     @Override
-    public void setHeatingStatus(boolean status) {
-        users.forEach(user -> {if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){User.setHeatingStatus(user, status);}});
-    }
+    public int getOverride() {
+        boolean b_override = false, cooling = false, heating = false;
+        for (User user : users) {
+            if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){b_override = User.getOverride(user); cooling = User.getCoolingStatus(user); heating = User.getHeatingStatus(user);} 
+        }
 
-    @Override
-    public boolean getCoolingStatus() {
-        return users.stream().anyMatch(user -> {if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){return User.getCoolingStatus(user);} else {return false;}});
-    }
-
-    @Override
-    public boolean getHeatingStatus() {
-        return users.stream().anyMatch(user -> {if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){return User.getHeatingStatus(user);} else {return false;}});
+        if (b_override & cooling){return 1;}
+        else if (b_override & heating){return 2;}
+        else if (b_override){return 3;}
+        else {return 0;}
     }
 
 }

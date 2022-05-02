@@ -199,63 +199,71 @@ public class postgreSQLConnection implements IConnection{
     }
 
     @Override
-    public void setCoolingStatus(boolean status) {
-        PreparedStatement queryStatement;
+    public int getOverride() {
         try {
-            queryStatement = connection.prepareStatement("UPDATE env_modulators SET cooling_status = '" + status + "' WHERE module_id = '" + unitID + "'");
+            Statement query = connection.createStatement();
+            ResultSet results = query.executeQuery("SELECT override AS override, cooling_status AS cooling, Heating_status AS heating FROM env_modulators WHERE module_id = '" + unitID + "'");
+            while(results.next()){
+                boolean override = results.getBoolean("override");
+                boolean cooling = results.getBoolean("cooling");
+                boolean heating = results.getBoolean("heating");
+                if (override == true) {
+                    if (cooling == true) {return 1;} 
+                    else if (heating == true) {return 2;}
+                    else {return 3;}
+                }
+                else {
+                    return 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public void setOverride(int override) {
+        PreparedStatement queryStatement;
+        boolean b_override,cooling,heating;
+        switch (override){
+            case 0:
+                b_override = false;
+                cooling = false;
+                heating = false;
+                break;
+            case 1:
+                b_override = true;
+                cooling = true;
+                heating = false;
+                break;
+            case 2:
+                b_override = true;
+                cooling = false;
+                heating = true;
+                break;
+            case 3:
+                b_override = true;
+                cooling = false;
+                heating = false;
+                break;
+            default:
+                b_override = false;
+                cooling = false;
+                heating = false;
+                break;
+        }
+        try {
+            queryStatement = connection.prepareStatement("UPDATE env_modulators SET override = '" + b_override + "', cooling_status = '" + cooling + "', Heating_status = '" + heating + "' WHERE module_id = '" + unitID + "'");
             queryStatement.execute();
             connection.commit();
         } catch (SQLException e) {
-            cout("Failed to set room temperature");
+            cout("Failed to set override");
             e.printStackTrace();
         }
+
     }
 
-    @Override
-    public void setHeatingStatus(boolean status) {
-        PreparedStatement queryStatement;
-        try {
-            queryStatement = connection.prepareStatement("UPDATE env_modulators SET heating_status = '" + status + "' WHERE module_id = '" + unitID + "'");
-            queryStatement.execute();
-            connection.commit();
-        } catch (SQLException e) {
-            cout("Failed to set room temperature");
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public boolean getCoolingStatus() {
-        try {
-            Statement query = connection.createStatement();
-            ResultSet results = query.executeQuery("SELECT cooling_status AS module FROM env_modulators WHERE module_id ='" + unitID + "'");
-            while(results.next()) {
-            	boolean target = results.getBoolean("module");
-            	return target;
-            }
-            results.close();
-        } catch (SQLException e) {
-            cout("Failed to get cooling status");
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean getHeatingStatus() {
-        try {
-            Statement query = connection.createStatement();
-            ResultSet results = query.executeQuery("SELECT heating_status AS module FROM env_modulators WHERE module_id ='" + unitID + "'");
-            while(results.next()) {
-            	boolean target = results.getBoolean("module");
-            	return target;
-            }
-            results.close();
-        } catch (SQLException e) {
-            cout("Failed to get heating status");
-            e.printStackTrace();
-        }
-        return false;
-    }
     
 }

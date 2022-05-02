@@ -7,15 +7,13 @@ public interface IConnection {
     public void setModuleStatus(boolean moduleStatus);
     public void setTargetTemp(double targetTemp);
     public void setRoomTemp(double roomTemp);
+    public void setOverride(int override);
 
     public boolean getModuleStatus();
     public double getTargetTemp();
     public double getRoomTemp();
+    public int getOverride();
 
-    public void setCoolingStatus(boolean status);
-    public void setHeatingStatus(boolean status);
-    public boolean getCoolingStatus();
-    public boolean getHeatingStatus();
 
     public void disconnect();
     public void addObserver(IObserver observer);
