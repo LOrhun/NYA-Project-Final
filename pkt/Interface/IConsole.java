@@ -4,7 +4,7 @@ public interface IConsole {
     public void thread_Update(double room_temp, double target_temp);
     public void thread_MenuType(int menu_type);
 
-    public int menu_main();
+    public int menu_main(int tempModStatus);
     public int menu_getMainSelection();
     public String menu_login(int login_step);
     public String menu_connectionType();

@@ -63,9 +63,13 @@ public class MConsoleEditor implements IConsole {
             gotoxy(2, 0);
             cout("                                                                                            ");
             gotoxy(2, 0);
-            cout("\t\t\t IDLE MODE");
+            cout("\t\t\t\t IDLE MODE");
             gotoxy(cursorLocation.getY(), cursorLocation.getX());
+            break;
             default:
+            gotoxy(2, 0);
+            cout("\t Hedef Sıcaklık: " + newDoubleType.format(target_temp) + " °C | Oda Sıcaklığı: " + newDoubleType.format(room_temp) + " °C");
+            gotoxy(cursorLocation.getY(), cursorLocation.getX());
             break;
         }
     }
@@ -75,10 +79,8 @@ public class MConsoleEditor implements IConsole {
         staticMenuType = menu_type;
     }
 
-    private static boolean pressedBefore_2 = false, pressedBefore_3 = false;
-
     @Override
-    public int menu_main() {
+    public int menu_main(int tempModStatus) {
         clearConsole();
         generateBorders(15, 75);
         thread_MenuType(1);
@@ -88,12 +90,10 @@ public class MConsoleEditor implements IConsole {
         cout("\t 1 - Hedef Sıcaklık Ayarlama");
         
         gotoxy(7, 0);
-        pressedBefore_2 = (main_menu_oldSelection == 2) ? !pressedBefore_2: false;
-        cout((pressedBefore_2 == false) ? "\t 2 - Soğutucuyu Aç" : "\t 2 - Soğutucuyu Kapat");
+        cout((tempModStatus != 1) ? "\t 2 - Soğutucuyu Aç" : "\t 2 - Soğutucuyu Kapat");
 
         gotoxy(8, 0);
-        pressedBefore_3 = (main_menu_oldSelection == 3) ? !pressedBefore_3: false;
-        cout((pressedBefore_3 == false) ? "\t 3 - Isıtıcıyı Aç" : "\t 3 - Isıtıcıyı Kapat");
+        cout((tempModStatus != 2) ? "\t 3 - Isıtıcıyı Aç" : "\t 3 - Isıtıcıyı Kapat");
 
 
         gotoxy(9, 0);
