@@ -1,0 +1,20 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>210</x><y>280</y><w>380</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=center
+MTemperatureModulator
+bg=#3EC1D3</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>310</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Oda Sıcaklığının Alınması</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>310</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+MTemperatureReader</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>400</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Sıcaklık Değiştirme</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>370</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+MConsoleEditor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>340</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Açılıp Kapanma Durumu</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>370</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Modül Durumunun Gösterimi</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>340</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+IConnection</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>400</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Kendisi</panel_attributes><additional_attributes></additional_attributes></element></diagram>

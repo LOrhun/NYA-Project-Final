@@ -1,0 +1,152 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>720</x><y>528</y><w>210</w><h>60</h></coordinates><panel_attributes>&lt;&lt;İnterface&gt;&gt;
+/IObserver/
+--
++ update(double args) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>778</y><w>210</w><h>240</h></coordinates><panel_attributes>&lt;&lt;İnterface&gt;&gt;
+/IConsole/
+--
++ thread_Update() : void
++ thread_MenuType() : void
+
++ menu_main(int status) : int
++ menu_getMainSelection() : int
++ menu_login(int step) : String
++ menu_connectionType() : String
++ menu_close() : void
++ menu_status(String status) : void
++ menu_error(String error) : void
++ menu_newTarget(double oldTarget) : double
+
++ close() : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>98</y><w>240</w><h>270</h></coordinates><panel_attributes>&lt;&lt;İnterface&gt;&gt;
+/IConnection/
+--
++ login_username(String username) : bool
++ login_password(String password) : bool
+
++ setModuleStatus(boolean status) : void
++ setTargetTemp(double temp) : void
++ setRoomTemp(double temp) : void
++ setOverride(int override) : void
+
++ getModuleStatus() : boolean
++ getTargetTemp() : double
++ getRoomTemp() : double
++ getOverride() : int
+
++ disconnect() : void
++ addObserver(IObserver observer) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>788</y><w>210</w><h>220</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+MConsoleEditor
+--
+- terminal : Terminal
+- cursorLocation : Cursor
+- reader : LineReader
+- newDoubleType : DecimalFormat
+_- main_menu_oldSelection : int_
+_- staticMenuType : int_
+_- prev_loginAttempt : int[]_
+
+--
+- gotoxy(int x, int y) : void
+- cout (String s) : void
+- generateBorders(int x, int y) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>478</y><w>230</w><h>140</h></coordinates><panel_attributes>&lt;&lt;İnterface&gt;&gt;
+/ITempModule/
+--
++ set_TargetTemp(double temp) : void
++ set_RoomTemp(double temp) : void
++ set_Override(int override) : void
++ stat_ModuleStatus() : boolean
++ get_CurrentStatus() : int
++ heatExchange() : void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>710</x><y>678</y><w>210</w><h>80</h></coordinates><panel_attributes>&lt;&lt;İnterface&gt;&gt;
+/ITempReader/
+--
++ get_RoomTemp() : double
++ stat_ModuleStatus() : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1048</x><y>88</y><w>210</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+postgreSQLConnection
+--
+- username : String
+- password : String
+- unitID : int
+- connection : Connection
+- targetTemp : double
+- observers : Array&lt;IObserver&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1048</x><y>268</y><w>210</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+virtualServerConnection
+--
+- username : String
+- password : String
+- users : Array&lt;Users&gt;
+- observers : Array&lt;IObserver&gt;
+- targetTemp : double</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>438</y><w>210</w><h>220</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+MTemperatureModulator
+--
+- target_temp : double
+- room_temp : double
+- override : int
+- start_cooling : boolean
+- start_heating : boolean
+- random : Random
+- room : Room
+--
+- stop_heating() : void
+- stop_cooling() : void
+- start_heating() : void
+- start_cooling() : void
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>688</y><w>210</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+MTemperatureReader
+--
+- room : Room</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>158</y><w>130</w><h>110</h></coordinates><panel_attributes>lt=&lt;..
+m1=1..0</panel_attributes><additional_attributes>110;10;50;10;50;90;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>238</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=&lt;..
+m1=1..0</panel_attributes><additional_attributes>110;100;50;100;50;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>308</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+MainProcUnit
+--
+- modulesThread : Thread
+- threadShouldStop : boolean
+- IdleCounter : int
+- TUnit : Runnable
+--
++ mainProcUnit()
+- TemperatureUnit() : void
+- logon() : void
+- MPU_run() void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>910</x><y>898</y><w>180</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>160;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>920</x><y>538</y><w>170</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>150;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>910</x><y>708</y><w>180</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>160;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>548</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>368</y><w>220</w><h>220</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=1
+m1=1</panel_attributes><additional_attributes>10;10;140;10;140;190;200;190</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>408</y><w>530</w><h>530</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes><additional_attributes>10;10;110;10;110;500;510;500</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>388</y><w>530</w><h>360</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes><additional_attributes>10;10;130;10;130;330;510;330</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1388</x><y>188</y><w>210</w><h>180</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+Users
+--
+- username : String
+- password : String
+- unidID : int
+- module_status : boolean
+- target_temp : double
+- room_temp : double
+- cooling_status : boolean
+- heating_status : boolean
+- override : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1250</x><y>278</y><w>160</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;60;80;60;80;10;140;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1418</x><y>608</y><w>210</w><h>100</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+Room
+--
+- roomTemp : double
+--
++ getRoomTemp() : double
++ setRoomTemp(double temp) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1270</x><y>548</y><w>170</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes><additional_attributes>10;10;60;10;60;120;150;120</additional_attributes></element><element><id>Relation</id><coordinates><x>1270</x><y>658</y><w>170</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1</panel_attributes><additional_attributes>10;60;60;60;60;10;150;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>68</y><w>1000</w><h>330</h></coordinates><panel_attributes>template=Connection Driver</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>198</y><w>270</w><h>60</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+ConFactory
+--
++ ConnectionFactory(String Type) : IConnection
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>218</y><w>160</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1
+m1=1</panel_attributes><additional_attributes>10;140;90;140;90;10;140;10</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>218</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>388</y><w>40</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1= 1
+m2= *</panel_attributes><additional_attributes>10;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>23</x><y>580</y><w>160</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Class&gt;&gt;
+Main
+--
++ main : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>93</x><y>470</y><w>40</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element></diagram>

@@ -1,0 +1,28 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>210</x><y>260</y><w>380</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=center
+MainProcUnit
+bg=#3EC1D3</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>290</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Ekran Çıktısı Alınması</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>290</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+MConsoleEditor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>320</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Sıcaklık Ölçümü</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>320</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+MTemperatureReader</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>350</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Sıcaklık Değiştirme</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>350</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+MTemperatureModulator</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>380</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Bağlantı Türü Sağlanması</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>380</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+ConFactorty</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>410</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Veritabanına Bağlanma</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>410</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+IConnection</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>210</x><y>440</y><w>220</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Modüller arası iletişim</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>440</y><w>160</w><h>30</h></coordinates><panel_attributes>valign=center
+halign=left
+Kendisi</panel_attributes><additional_attributes></additional_attributes></element></diagram>
