@@ -200,8 +200,13 @@ public class MConsoleEditor implements IConsole {
         cout("\t Eski Hedef Sıcaklık: " + newDoubleType.format(oldTarget_temp) + " °C");
         gotoxy(3, 0);
         cout("\t Yeni Hedef Sıcaklık: ");
-        String s = reader.readLine();
-        return ((Double.parseDouble(s) < -273 | Double.parseDouble(s) > 75) ? menu_newTarget(oldTarget_temp) : Double.parseDouble(s));
+
+        try {
+            return Double.parseDouble(reader.readLine("").replaceAll(",", "\\."));
+        } catch (Exception e) {
+            return oldTarget_temp;
+        }
+
     }
 
     @Override

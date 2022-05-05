@@ -38,7 +38,8 @@ public class MTemperatureModulator implements IObserver {
     }
 
     @Override
-    public void set_Override(int Override) {
+    @Deprecated
+    public void set_Override(int Override) { //! Update Method Replaced it
         this.Override = Override;
     }
 
@@ -80,7 +81,8 @@ public class MTemperatureModulator implements IObserver {
     }
 
     @Override
-    public void update(double targetTemp) {
+    public void update(double targetTemp, int Override) {
         this.target_temp = targetTemp;
+        this.Override = Override;
     }
 }
