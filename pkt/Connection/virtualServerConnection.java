@@ -14,7 +14,8 @@ public class virtualServerConnection implements IConnection{
     private String username;
     private String password;
 
-    private double targetTemp = 25;
+    private double targetTemp = 0;
+    private int override = 0;
     
     public virtualServerConnection(){
         users.add(new User("test", "test", 1, false, 20, 20, false, false, false));
@@ -23,7 +24,7 @@ public class virtualServerConnection implements IConnection{
     }
 
     private void notify(double target_temp){
-        observers.forEach(observer -> observer.update(target_temp));
+        observers.forEach(observer -> observer.update(target_temp, this.override));
     }
 
     @Override
@@ -123,10 +124,15 @@ public class virtualServerConnection implements IConnection{
             if (User.getUsername(user).equals(this.username) & User.getPassword(user).equals(this.password)){b_override = User.getOverride(user); cooling = User.getCoolingStatus(user); heating = User.getHeatingStatus(user);} 
         }
 
-        if (b_override & cooling){return 1;}
-        else if (b_override & heating){return 2;}
-        else if (b_override){return 3;}
-        else {return 0;}
+        if (b_override == true) {
+            if (cooling == true) {if (this.override != 1){this.override = 1; notify(this.targetTemp);} return 1;} 
+            else if (heating == true) {if (this.override != 2){this.override = 2; notify(this.targetTemp);} return 2;}
+            else {if (this.override != 3){this.override = 3; notify(this.targetTemp);} return 3;}
+        }
+        else {
+            if (this.override != 0){this.override = 0; notify(this.targetTemp);}
+            return 0;
+        }
     }
 
 }

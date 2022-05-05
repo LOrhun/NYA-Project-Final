@@ -12,9 +12,7 @@ public class MainProcUnit {
             while(!threadShouldStop)
             { 
                 try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-                if (interruptThread == false){
-                    TemperatureUnit();
-                }
+                TemperatureUnit(interruptThread);
                 try {Thread.sleep(1400);} catch (InterruptedException e) {e.printStackTrace();}
             }
         }
@@ -26,7 +24,7 @@ public class MainProcUnit {
     private int IdleCounter;
     private Room simulatedRoom;
     private IConnection connection;
-    private ITempMod tMod;
+    private IObserver tMod;
     private ITempReader tReader;
     private IConsole console;
 
@@ -49,19 +47,22 @@ public class MainProcUnit {
 
     }
 
-    private void TemperatureUnit(){     
-        connection.setRoomTemp(tReader.get_RoomTemp());
+    private void TemperatureUnit(boolean interruptThread){     
+        if (!interruptThread){
+            connection.setRoomTemp(tReader.get_RoomTemp());
 
-        tMod.set_RoomTemp(tReader.get_RoomTemp());
-        tMod.set_TargetTemp(connection.getTargetTemp());
-        tMod.heatExchange();
-
-        tMod.set_Override(connection.getOverride());
-
-        IdleCounter = ((tMod.get_CurrentStatus() == 0) ? IdleCounter + 1 : 0);
-        console.thread_Update(tReader.get_RoomTemp(), connection.getTargetTemp());
-        console.thread_MenuType((IdleCounter > 5) ? 2 : 1);
+            tMod.set_RoomTemp(tReader.get_RoomTemp());
+            tMod.heatExchange();
+    
+            //tMod.set_Override(connection.getOverride()); //! Add this to observer update method and remove it from here
+            connection.getOverride();
+    
+            IdleCounter = ((tMod.get_CurrentStatus() == 0) ? IdleCounter + 1 : 0);
+            console.thread_Update(tReader.get_RoomTemp(), connection.getTargetTemp());
+            console.thread_MenuType((IdleCounter > 5) ? 2 : 1);
+        }
     }
+
 
     private void logon(){
         boolean connect = false;
@@ -83,6 +84,7 @@ public class MainProcUnit {
         try {TimeUnit.MILLISECONDS.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
         
         boolean pressedBefore_2 = false, pressedBefore_3 = false;
+        connection.addObserver(tMod);
         modulesThread.start();
 
         while (console.menu_main(connection.getOverride()) != 5){

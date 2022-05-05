@@ -1,5 +1,5 @@
 package pkt.Interface;
 
 public interface IObserver extends ITempMod {
-    public void update(double targetTemp);
+    public void update(double targetTemp, int override);
 }

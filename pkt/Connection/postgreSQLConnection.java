@@ -12,6 +12,7 @@ public class postgreSQLConnection implements IConnection{
     private Connection connection;
     private int unitID;
     private double targetTemp;
+    private int override;
 
     private String username;
     private String password;
@@ -20,6 +21,7 @@ public class postgreSQLConnection implements IConnection{
 
     public postgreSQLConnection(){
         targetTemp = 0;
+        override = 0;
         connect();
         try {
             connection.setAutoCommit(false);
@@ -40,7 +42,7 @@ public class postgreSQLConnection implements IConnection{
     }
 
     private void update(){
-        observers.forEach(observer -> observer.update(this.targetTemp));
+        observers.forEach(observer -> observer.update(this.targetTemp, this.override));
     }
 
     @Override
@@ -144,7 +146,7 @@ public class postgreSQLConnection implements IConnection{
             Statement query = connection.createStatement();
             ResultSet results = query.executeQuery("SELECT target_temperature AS target FROM env_modulators WHERE module_id ='" + unitID + "'");
             while(results.next()) {
-            	int target = results.getInt("target");
+            	double target = results.getDouble("target");
                 if (target != this.targetTemp) {
                     this.targetTemp = target;
                     update();
@@ -207,12 +209,14 @@ public class postgreSQLConnection implements IConnection{
                 boolean override = results.getBoolean("override");
                 boolean cooling = results.getBoolean("cooling");
                 boolean heating = results.getBoolean("heating");
+
                 if (override == true) {
-                    if (cooling == true) {return 1;} 
-                    else if (heating == true) {return 2;}
-                    else {return 3;}
+                    if (cooling == true) {if (this.override != 1){this.override = 1; update();} return 1;} 
+                    else if (heating == true) {if (this.override != 2){this.override = 2; update();} return 2;}
+                    else {if (this.override != 3){this.override = 3; update();} return 3;}
                 }
                 else {
+                    if (this.override != 0){this.override = 0; update();}
                     return 0;
                 }
             }
